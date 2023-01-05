@@ -30,9 +30,8 @@ const hourSchema = new mongoose.Schema(
 );
 
 hourSchema.pre('save', function (next) {
-  this.hoursWasted = 11 - hoursStudied;
+  this.hoursWasted = 11 - this.hoursStudied;
   this.hoursStudiedInPercentage = Math.round((this.hoursStudied * 100) / 11);
-
   next();
 });
 

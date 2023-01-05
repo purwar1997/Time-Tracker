@@ -1,10 +1,11 @@
 import express from 'express';
-import { createEntry, getEntries, getAllEntries } from '../controllers/controllers';
+import { home, createEntry, getEntries, getAllEntries } from '../controllers/controllers.js';
 
 const router = express.Router();
 
-router.post('/createEntry', createEntry);
-router.get('/getEntries', getEntries);
-router.get('/getAllEntries', getAllEntries);
+router.get('/api', home);
+router.post('/api/createEntry', createEntry);
+router.get('/api/getEntries', getEntries);
+router.get('/api/getAllEntries', getAllEntries);
 
 export default router;

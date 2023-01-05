@@ -1,11 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import router from './routes/routes';
-import connect from './config/dbconnection';
+import router from './routes/routes.js';
 
 const app = express();
 dotenv.config();
-connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
