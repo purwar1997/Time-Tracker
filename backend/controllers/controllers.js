@@ -2,8 +2,17 @@ import Hour from '../models/hour.js';
 import asyncHandler from '../services/asyncHandler.js';
 import CustomError from '../utils/customError.js';
 
+/**
+ * @home
+ * @request_type GET
+ * @route http://localhost:4000/api/
+ * @description Controller that returns an HTML element to the client
+ * @parameters none
+ * @returns HTML element
+ */
+
 export const home = asyncHandler(async (_req, res) => {
-  res.status(201).send('<h1 style="text-align: center">Time tracker</h1>');
+  res.status(201).send('<h1 style="text-align: center">Time Tracker</h1>');
 });
 
 /**
