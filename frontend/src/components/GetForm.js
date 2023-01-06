@@ -27,7 +27,7 @@ const GetForm = function () {
         <div className="text-center space-y-5">
           <div className="flex flex-col gap-4 items-center sm:flex-row sm:justify-center sm:gap-5">
             <label className="text-lg" htmlFor="days">
-              How many days of timesheet do you want ?
+              How many days of timesheet do you want to access ?
             </label>
             <input
               className="bg-[#f9f9f9] border rounded px-2.5 py-1.5 w-40 text-center sm:text-left focus:outline-[#656EF5]"

@@ -50,7 +50,7 @@ export const createEntry = asyncHandler(async (req, res) => {
   });
 
   if (result) {
-    throw new Error('You cannot pass more than one entry a day', 401);
+    throw new Error('You can only pass one entry a day', 401);
   }
 
   let entry = new Hour({ hoursStudied: hours });
@@ -92,7 +92,7 @@ export const getEntries = asyncHandler(async (req, res) => {
   }
 
   if (days > entries.length) {
-    throw new Error(`Entered value be less than or equal to ${entries.length}`);
+    throw new Error(`Entered value should be less than or equal to ${entries.length}`);
   }
 
   res.status(201).json({
