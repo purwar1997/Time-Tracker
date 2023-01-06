@@ -25,13 +25,15 @@ export const home = asyncHandler(async (_req, res) => {
  */
 
 export const createEntry = asyncHandler(async (req, res) => {
-  const { hours } = req.body;
+  let { hours } = req.body;
 
-  if (hours === undefined) {
+  if (hours === '') {
     throw new CustomError('Please enter the no of hours', 401);
   }
 
-  if (typeof hours !== 'number') {
+  hours = Number(hours);
+
+  if (isNaN(hours)) {
     throw new CustomError('Entered value should be a number', 401);
   }
 
@@ -39,15 +41,13 @@ export const createEntry = asyncHandler(async (req, res) => {
     throw new CustomError('Entered value should be in between 0 and 11', 401);
   }
 
-  const currDate = new Date();
-  const dates = await Hour.find().select({ createdAt: 1 });
+  const [, currMonth, currDate, currYear] = new Date().toString().split(' ');
+  const dates = await Hour.find().select({ date: 1 });
 
-  const result = dates.some(
-    ({ createdAt: date }) =>
-      date.getDay() === currDate.getDay() &&
-      date.getMonth() === currDate.getMonth() &&
-      date.getFullYear() === currDate.getFullYear()
-  );
+  const result = dates.some(({ date: dateStr }) => {
+    const [, month, date, year] = dateStr.split(' ');
+    return currDate === date && currMonth === month && currYear === year;
+  });
 
   if (result) {
     // throw new Error('You cannot pass more than one entry a day', 401);
@@ -65,7 +65,7 @@ export const createEntry = asyncHandler(async (req, res) => {
 
 /**
  * @getEntries
- * @request_type GET
+ * @request_type POST
  * @route http://localhost:4000/api/getEntries
  * @description Controller that allows user to fetch n number of entries
  * @parameters days
@@ -73,13 +73,15 @@ export const createEntry = asyncHandler(async (req, res) => {
  */
 
 export const getEntries = asyncHandler(async (req, res) => {
-  const { days } = req.body;
+  let { days } = req.body;
 
-  if (!days) {
+  if (days === '') {
     throw new CustomError('Please enter the no of days', 401);
   }
 
-  if (!(typeof days === 'number' && Number.isInteger(days))) {
+  days = Number(days);
+
+  if (isNaN(days) || !Number.isInteger(days)) {
     throw new Error('Entered value should be an integer', 401);
   }
 
@@ -91,7 +93,7 @@ export const getEntries = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    message: `Entries of last ${entries.length} days have been fetched`,
+    message: `Entries of last ${days} days have been fetched`,
     data: entries.slice(entries.length - days).reverse(),
   });
 });
@@ -111,6 +113,6 @@ export const getAllEntries = asyncHandler(async (_req, res) => {
   res.status(201).json({
     success: true,
     message: 'All the entries have been successfully fetched',
-    data: entries,
+    data: entries.reverse(),
   });
 });

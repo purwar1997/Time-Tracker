@@ -4,9 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Frontend part of Time tracker application" />
-    <title>React App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: {
+            sm: '640px',
+            md: '900px',
+            lg: '1100px',
+          },
+        },
+      };
+    </script>
+
+    <title>Time Tracker</title>
   </head>
-  <body>
+  <body class="px-5 py-10 sm:px-10">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
