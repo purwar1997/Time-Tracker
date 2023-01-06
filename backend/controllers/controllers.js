@@ -50,7 +50,7 @@ export const createEntry = asyncHandler(async (req, res) => {
   });
 
   if (result) {
-    // throw new Error('You cannot pass more than one entry a day', 401);
+    throw new Error('You cannot pass more than one entry a day', 401);
   }
 
   let entry = new Hour({ hoursStudied: hours });
@@ -87,8 +87,12 @@ export const getEntries = asyncHandler(async (req, res) => {
 
   const entries = await Hour.find();
 
-  if (days < 1 || days > entries.length) {
-    throw new Error(`Entered value should be in between 1 and ${entries.length}`);
+  if (days < 1) {
+    throw new Error(`Entered value should be a positive number`);
+  }
+
+  if (days > entries.length) {
+    throw new Error(`Entered value be less than or equal to ${entries.length}`);
   }
 
   res.status(201).json({
