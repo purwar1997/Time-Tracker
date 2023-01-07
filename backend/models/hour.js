@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const hourSchema = new mongoose.Schema({
   hoursStudied: {
     type: Number,
-    required: [true, 'Enter the no of hours you studied today?'],
+    required: [true, 'Enter the no of hours you studied today'],
     default: 0,
     min: 0,
     max: 11,

@@ -6,7 +6,7 @@ const EntriesTable = function ({ entries, setEntries }) {
 
   const totalHoursWasted = () => entries.reduce((total, { hoursWasted }) => total + hoursWasted, 0);
 
-  const totalHoursStudiedInPrecentage = () =>
+  const totalHoursStudiedInPercentage = () =>
     Math.round(
       entries.reduce((total, { hoursStudiedInPercentage }) => total + hoursStudiedInPercentage, 0) /
         entries.length
@@ -16,7 +16,7 @@ const EntriesTable = function ({ entries, setEntries }) {
     <>
       {entries.length ? (
         <table className="mx-auto mt-12 w-full md:w-5/6 lg:w-3/4">
-          <thead>
+          <thead className="bg-[#f5f5f5]">
             <tr className="border">
               <th className="px-2 sm:px-5 py-2 text-gray-700 font-medium">Date</th>
               <th className="px-2 sm:px-5 py-2 text-gray-700 font-medium">Hours studied</th>
@@ -47,10 +47,10 @@ const EntriesTable = function ({ entries, setEntries }) {
               <td className="px-3 sm:px-5 py-2 text-center">{totalHoursWasted()}</td>
               <td
                 className={`px-3 sm:px-5 py-2 text-center ${
-                  totalHoursStudiedInPrecentage() < 75 ? 'text-red-500' : 'text-green-500'
+                  totalHoursStudiedInPercentage() < 75 ? 'text-red-500' : 'text-green-500'
                 }`}
               >
-                {totalHoursStudiedInPrecentage()}
+                {totalHoursStudiedInPercentage()}
               </td>
             </tr>
           </tbody>
