@@ -84,17 +84,17 @@ export const getEntries = asyncHandler(async (req, res) => {
   days = Number(days);
 
   if (isNaN(days) || !Number.isInteger(days)) {
-    throw new Error('Entered value should be an integer', 401);
+    throw new CustomError('Entered value should be an integer', 401);
   }
 
   if (days < 1) {
-    throw new Error(`Entered value should be a positive number`);
+    throw new CustomError(`Entered value should be a positive number`);
   }
 
   const entries = await Hour.find();
 
   if (days > entries.length) {
-    throw new Error(`Entered value should be less than or equal to ${entries.length}`);
+    throw new CustomError(`Entered value should be less than or equal to ${entries.length}`);
   }
 
   res.status(201).json({
