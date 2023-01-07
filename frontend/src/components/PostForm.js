@@ -13,9 +13,9 @@ const PostForm = function () {
     async function fetchData() {
       try {
         const res = await axios.get('/api/getAllEntries');
-        setEntries(res.data.data);
+        setEntries(res.data.entries);
       } catch (err) {
-        console.log(err.response.data.message);
+        console.log(err.response.data);
       }
     }
 
@@ -27,9 +27,8 @@ const PostForm = function () {
 
     try {
       const res = await axios.post('/api/createEntry', { hours });
-      setEntry(res.data.data);
+      setEntry(res.data.entry);
       console.log(res.data);
-      console.log(res.data.data.date);
     } catch (err) {
       alert(err.response.data.message);
       console.log(err.response.data);
@@ -40,7 +39,7 @@ const PostForm = function () {
 
   return (
     <>
-      <form className="mt-12" action="" method="post" onSubmit={handleSubmit}>
+      <form className="mt-10 sm:mt-12" action="" method="post" onSubmit={handleSubmit}>
         <div className="text-center space-y-5">
           <div className="flex flex-col gap-4 items-center sm:flex-row sm:justify-center sm:gap-5">
             <label className="text-lg" htmlFor="hours">

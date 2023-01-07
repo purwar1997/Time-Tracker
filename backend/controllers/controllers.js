@@ -26,6 +26,7 @@ export const home = asyncHandler(async (_req, res) => {
 
 export const createEntry = asyncHandler(async (req, res) => {
   let { hours } = req.body;
+  hours = hours.trim();
 
   if (hours === '') {
     throw new CustomError('Please enter the no of hours', 401);
@@ -50,7 +51,7 @@ export const createEntry = asyncHandler(async (req, res) => {
   });
 
   if (result) {
-    throw new Error('You can only pass one entry a day', 401);
+    throw new CustomError('You can only pass one entry a day', 401);
   }
 
   let entry = new Hour({ hoursStudied: hours });
@@ -59,7 +60,7 @@ export const createEntry = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     message: 'A new entry has been created',
-    data: entry,
+    entry,
   });
 });
 
@@ -69,11 +70,12 @@ export const createEntry = asyncHandler(async (req, res) => {
  * @route http://localhost:4000/api/getEntries
  * @description Controller that allows user to fetch n number of entries
  * @parameters days
- * @returns an array of entry objects
+ * @returns array of entry objects
  */
 
 export const getEntries = asyncHandler(async (req, res) => {
   let { days } = req.body;
+  days = days.trim();
 
   if (days === '') {
     throw new CustomError('Please enter the no of days', 401);
@@ -85,11 +87,11 @@ export const getEntries = asyncHandler(async (req, res) => {
     throw new Error('Entered value should be an integer', 401);
   }
 
-  const entries = await Hour.find();
-
   if (days < 1) {
     throw new Error(`Entered value should be a positive number`);
   }
+
+  const entries = await Hour.find();
 
   if (days > entries.length) {
     throw new Error(`Entered value should be less than or equal to ${entries.length}`);
@@ -98,7 +100,7 @@ export const getEntries = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     message: `Entries of last ${days} days have been fetched`,
-    data: entries.slice(entries.length - days).reverse(),
+    entries: entries.slice(entries.length - days).reverse(),
   });
 });
 
@@ -108,7 +110,7 @@ export const getEntries = asyncHandler(async (req, res) => {
  * @route http://localhost:4000/api/getAllEntries
  * @description Controller that allows user to fetch all the entries
  * @parameters none
- * @returns an array of all entry objects
+ * @returns array of all entry objects
  */
 
 export const getAllEntries = asyncHandler(async (_req, res) => {
@@ -117,6 +119,6 @@ export const getAllEntries = asyncHandler(async (_req, res) => {
   res.status(201).json({
     success: true,
     message: 'All the entries have been successfully fetched',
-    data: entries.reverse(),
+    entries: entries.reverse(),
   });
 });

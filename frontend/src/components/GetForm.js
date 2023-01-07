@@ -11,7 +11,7 @@ const GetForm = function () {
 
     try {
       const res = await axios.post('/api/getEntries', { days });
-      setEntries(res.data.data);
+      setEntries(res.data.entries);
       console.log(res.data);
     } catch (err) {
       alert(err.response.data.message);

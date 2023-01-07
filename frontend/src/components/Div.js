@@ -8,7 +8,7 @@ const Div = function () {
   const handleClick = async () => {
     try {
       const res = await axios.get('/api/getAllEntries');
-      setEntries(res.data.data);
+      setEntries(res.data.entries);
       console.log(res.data);
     } catch (err) {
       alert(err.response.data.message);
